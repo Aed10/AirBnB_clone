@@ -117,31 +117,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def default(self, arg):
-        """Called on an input line when the command prefix is not recognized"""
-        args = arg.split(".")
-        if args[0] in HBNBCommand.classes:
-            if args[1] == "all()":
-                self.do_all(args[0])
-            elif args[1] == "count()":
-                self.do_count(args[0])
-            elif args[1].startswith("show("):
-                self.do_show(args[0] + " " + args[1][6:-2])
-            elif args[1].startswith("destroy("):
-                self.do_destroy(args[0] + " " + args[1][9:-2])
-            elif args[1].startswith("update("):
-                args[1] = args[1][7:-1]
-                args[1] = args[1].replace('"', "")
-                args[1] = args[1].replace("'", "")
-                args[1] = args[1].replace(",", "")
-                args[1] = args[1].replace("{", "")
-                args[1] = args[1].replace("}", "")
-                args[1] = args[1].split()
-                self.do_update(
-                    args[0] + " " + args[1][0] + " " + args[1][1] + " " +
-                    args[1][2])
-        else:
-            print("*** Unknown syntax: {}".format(arg))
     def do_count(self, arg):
         """Retrieve the number of instances of a class"""
         count = 0
