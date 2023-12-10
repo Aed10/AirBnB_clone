@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not arg:
             print([str(value) for value in models.storage.all().values()])
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             print(
