@@ -18,4 +18,3 @@ class User(BaseModel):
         """This method prints a string representation of a User instance"""
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
                                      self.__dict__)
-    
