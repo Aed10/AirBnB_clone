@@ -117,6 +117,67 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
+    def default(self, arg):
+        """Called on an input line when the command prefix is not recognized"""
+        args = arg.split(".")
+        if args[0] in HBNBCommand.classes:
+            if args[1] == "all()":
+                self.do_all(args[0])
+            elif args[1] == "count()":
+                self.do_count(args[0])
+            elif args[1].startswith("show("):
+                self.do_show(args[0] + " " + args[1][6:-2])
+            elif args[1].startswith("destroy("):
+                self.do_destroy(args[0] + " " + args[1][9:-2])
+            elif args[1].startswith("update("):
+                args[1] = args[1][7:-1]
+                args[1] = args[1].replace('"', "")
+                args[1] = args[1].replace("'", "")
+                args[1] = args[1].replace(",", "")
+                args[1] = args[1].replace("{", "")
+                args[1] = args[1].replace("}", "")
+                args[1] = args[1].split()
+                self.do_update(
+                    args[0] + " " + args[1][0] + " " + args[1][1] + " " +
+                    args[1][2])
+        else:
+            print("*** Unknown syntax: {}".format(arg))
+    def do_count(self, arg):
+        """Retrieve the number of instances of a class"""
+        count = 0
+        for key in models.storage.all():
+            if key.startswith(arg + "."):
+                count += 1
+        print(count)
+
+    def do_BaseModel(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("BaseModel")
+
+    def do_User(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("User")
+
+    def do_State(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("State")
+
+    def do_City(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("City")
+
+    def do_Amenity(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("Amenity")
+
+    def do_Place(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("Place")
+
+    def do_Review(self, arg):
+        """Retrieve the number of instances of a class"""
+        self.do_count("Review")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
