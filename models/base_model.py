@@ -5,8 +5,6 @@ from datetime import datetime
 import models
 
 
-
-
 class BaseModel:
     """A base class for all hbnb models"""
 
@@ -17,8 +15,7 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 elif key == "created_at" or key == "updated_at":
-                    setattr(self, key, datetime.strptime(
-                        value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                 else:
                     setattr(self, key, value)
         else:
@@ -29,9 +26,7 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
-        return "[{}] ({}) {}".format(
-            self.__class__.__name__, self.id, self.__dict__
-            )
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """Updates updated_at with the current datetime"""
