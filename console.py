@@ -11,6 +11,8 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter class"""
 
     prompt = "(hbnb) "
+    classes = {"BaseModel",
+               "User", "State", "City", "Amenity", "Place", "Review"}
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -29,10 +31,10 @@ class HBNBCommand(cmd.Cmd):
         and prints the id"""
         if not arg:
             print("** class name missing **")
-        elif arg != "BaseModel":
+        elif arg not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
-            new_instance = BaseModel()
+            new_instance = eval(arg)()
             new_instance.save()
             print(new_instance.id)
 
@@ -42,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not arg:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -59,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not arg:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -94,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not arg:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
