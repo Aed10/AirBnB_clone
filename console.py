@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
     def do_User(self, arg):
         """Retrieve the number of instances of a class"""
         self.do_count("User")
-
+    
     def do_State(self, arg):
         """Retrieve the number of instances of a class"""
         self.do_count("State")
