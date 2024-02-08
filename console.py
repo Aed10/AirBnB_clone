@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a command interpreter for AirBnB clone"""
 import cmd
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -15,8 +16,7 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter class"""
 
     prompt = "(hbnb) "
-    classes = {"BaseModel", "User", "State", "City",
-                            "Amenity", "Place", "Review"}
+    classes = {"BaseModel", "User", "State", "City", "Amenity", "Place", "Review"}
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -118,40 +118,53 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_count(self, arg):
-        """Retrieve the number of instances of a class"""
+        """
+        Retrieve the number of instances of a class
+
+        Args:
+            arg (str): The class name
+
+        Returns:
+            int: The number of instances of the class
+
+        """
+
         count = 0
         for key in models.storage.all():
             if key.startswith(arg + "."):
                 count += 1
         print(count)
 
-    def do_BaseModel(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("BaseModel")
+    def default(self, line: str) -> None:
+        """
+        This function is the default method of the HBNBCommand class.
+        It is called when the user enters a command that does not match any of the other methods.
 
-    def do_User(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("User")
-    
-    def do_State(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("State")
+        Args:
+            line (str): The command entered by the user.
 
-    def do_City(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("City")
+        Returns:
+            None: This function does not return any values.
 
-    def do_Amenity(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("Amenity")
+        Raises:
+            None: This function does not raise any exceptions.
 
-    def do_Place(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("Place")
+        """
+        if "." in line:
+            parts = line.split(".", 1)
 
-    def do_Review(self, arg):
-        """Retrieve the number of instances of a class"""
-        self.do_count("Review")
+            if len(parts) == 2:
+                funct = {"all": self.do_all, "count": self.do_count}
+                if parts[1] in funct and parts[0] in self.classes:
+                    funct[parts[1]](parts[0])
+                else:
+                    print(f"** {parts[1]} or {parts[0]} not defined **")
+        else:
+            return cmd.Cmd.default(self, line)
+
+    def do_clear(self, arg):
+        """Clears the screen"""
+        os.system("cls" if os.name == "nt" else "clear")
 
 
 if __name__ == "__main__":
